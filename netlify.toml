@@ -1,0 +1,4 @@
+# Netlify：发布目录为仓库根目录；自定义域名在后台 Domains 中绑定
+[build]
+  publish = "."
+  command = "npm run domain"

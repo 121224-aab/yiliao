@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="联系妙手AI团队：商务合作、媒体与产品反馈。">
+    <link rel="canonical" href="https://miraculoushandai.top/contact.html">
+    <title>联系我们 - 妙手AI</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+
+<body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="logo" href="index.html">🏥 妙手AI</a>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav-panel"
+                aria-label="打开或关闭导航菜单">
+                <span class="nav-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <div class="nav-panel" id="site-nav-panel">
+                <nav aria-label="主导航">
+                    <ul class="nav-menu">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="product.html">产品能力</a></li>
+                        <li><a href="app.html">应用广场</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="contact.html" aria-current="page">联系我们</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="page-wrap">
+        <header class="page-hero">
+            <p class="page-eyebrow">沟通渠道</p>
+            <h1 class="page-title">联系我们</h1>
+            <p class="page-lead">欢迎产品咨询、渠道合作与媒体联络。官网地址为 <a class="text-link" id="site-official-link"
+                    href="https://miraculoushandai.top/">miraculoushandai.top</a>，全站对公众开放访问。提交表单将唤起本机邮件客户端，信件直达我们邮箱，不经过网页服务器存储。</p>
+        </header>
+
+        <form class="content-card" style="max-width: 560px;" action="mailto:contact@miraculoushandai.top" method="post"
+            enctype="text/plain">
+            <div class="form-group">
+                <label for="subject">主题</label>
+                <input type="text" id="subject" name="subject" required autocomplete="off"
+                    placeholder="例如：产品合作 / 功能建议">
+            </div>
+            <div class="form-group">
+                <label for="body">留言内容</label>
+                <textarea id="body" name="body" rows="6" required placeholder="请留下您的需求与联系方式（邮箱或电话）"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">通过邮件发送</button>
+            <p class="form-hint" id="site-contact-hint">收件邮箱为 <code id="site-contact-email">contact@miraculoushandai.top</code>。若该邮箱尚未开通，请在域名邮箱或托管后台创建同名邮箱，或改为贵司实际对外邮箱并同步修改 <code>domain.config.json</code> 后重新运行同步脚本。</p>
+        </form>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>网站地图</h4>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="product.html">产品能力</a></li>
+                    <li><a href="app.html">应用广场</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关于</h4>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>声明</h4>
+                <ul>
+                    <li><a href="about.html#disclaimer">免责声明</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-bottom">本平台内容仅供健康科普与就医参考，不能替代执业医师面诊。如有不适，请及时就医。</p>
+    </footer>
+    <script src="assets/site.js" defer></script>
+</body>
+
+</html>

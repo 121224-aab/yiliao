@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="妙手AI - 官网：健康科普、智能问诊辅助、用药与就医指引。内容仅供参考，请及时就医。">
+    <link rel="canonical" href="https://miraculoushandai.top/">
+    <title>首页 - 妙手AI</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any">
+    <link rel="stylesheet" href="assets/site.css">
+    <style>
+        /* 首页局部样式（与全站 assets/site.css 叠加） */
+        .home-layer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /*粒子装饰*/
+
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: .15;
+
+            background-image: radial-gradient(circle at 10% 20%, rgba(236, 127, 162, .8) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 163, 122, .8) 0%, transparent 20%)
+        }
+
+        .download-link {
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .auth-btn {
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #ec7fa2, #ffa37a);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .auth-btn.outline {
+            background: transparent;
+            border: 1px solid rgba(236, 127, 162, .5);
+            color: #ec7fa2
+        }
+
+        /* 用户名称 */
+        .user-info {
+            color: #ec7fa2;
+            font-weight: bold;
+            font-size: 16px;
+            display: none;
+        }
+
+        /* 退出按钮 */
+        .logout-btn {
+            padding: 6px 14px;
+            background: transparent;
+            border: 1px solid #ec7fa2;
+            color: #ec7fa2;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            display: none;
+        }
+
+        .hero {
+            max-width: 1280px;
+            margin: 40px auto 60px;
+            padding: 60px 24px;
+            text-align: center
+        }
+
+        /*智慧医疗助手*/
+        .hero h1 {
+            font-size: 42px;
+            background: linear-gradient(90deg, #fff, #ec7fa2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent
+        }
+
+        /*your health*/
+        .hero p {
+            color: #d8c4c7;
+            margin-top: 10px
+        }
+
+        .features {
+            max-width: 1280px;
+            margin: 0 auto 80px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            position: relative
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, .05);
+            backdrop-filter: blur(9px);
+            border: 1px solid rgba(236, 127, 162, .2);
+            border-radius: 18px;
+            padding: 30px;
+        }
+
+        /*鼠标悬浮*/
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(236, 127, 162, .15)
+        }
+
+        /*小图标*/
+        .card-icon {
+            width: 62px;
+            height: 62px;
+            background: linear-gradient(135deg, #ec7fa2, #ffa37a);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            margin-bottom: 20px
+        }
+
+        .feature-card h2 {
+            font-size: 22px;
+            margin-bottom: 10px
+        }
+
+        .feature-card li {
+            padding: 5px 0;
+            list-style: none;
+            color: #f3e6e8
+        }
+
+        .feature-card li:before {
+            content: "\2022 ";
+            color: #ec7fa2
+        }
+
+        /*开始问诊等按钮*/
+        .feature-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #ec7fa2, #ffa37a);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 10px;
+            cursor: pointer
+        }
+
+        /*弹窗*/
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999
+        }
+
+        .modal-box {
+            background: rgba(45, 27, 46, .9);
+            border: 1px solid rgba(236, 127, 162, .3);
+            border-radius: 18px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 520px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-box h2 {
+            text-align: center;
+            margin-bottom: 24px;
+            color: #ec7fa2
+        }
+
+        .input-group {
+            margin-bottom: 20px
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(236, 127, 162, .3);
+            background: rgba(255, 255, 255, .05);
+            color: #fff;
+            font-size: 16px;
+            resize: vertical;
+        }
+
+        .modal-submit {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #ec7fa2, #ffa37a);
+            border: none;
+            border-radius: 11px;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px
+        }
+
+        /*没有账号？快去注册呀*/
+        .modal-switch {
+            text-align: center;
+            margin-top: 15px;
+            color: #d8c4c7
+        }
+
+        .modal-switch a {
+            color: #ec7fa2;
+            cursor: pointer
+        }
+
+        /*关闭*/
+        .close-btn {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid rgba(236, 127, 162, .5);
+            color: #ec7fa2;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        /* AI 回复样式 */
+        .ai-reply {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            border-radius: 10px;
+            margin-top: 15px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .loading {
+            color: #ec7fa2;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /*小爱心*/
+        .side-icon {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: #ec7fa2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 888;
+            box-shadow: 0 0 15px rgba(236, 127, 162, .4);
+            transition: 0.3s;
+        }
+
+        .side-icon:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /*小弹窗*/
+        .tip-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+        }
+
+        .tip-box {
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 320px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .tip-close {
+            margin-top: 20px;
+            padding: 8px 16px;
+            background: #ec7fa2;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <a class="skip-link" href="#main">跳到主要内容</a>
+    <div class="bg-particles" aria-hidden="true"></div>
+    <div class="side-icon" role="button" tabindex="0" aria-label="随机祝福" onclick="showWish()"
+        onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showWish();}">💖</div>
+
+    <header class="site-header">
+        <div class="nav-container">
+            <a class="logo" href="index.html">🏥 妙手AI</a>
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav-panel"
+                aria-label="打开或关闭导航菜单">
+                <span class="nav-toggle-icon" aria-hidden="true"></span>
+            </button>
+            <div class="nav-panel" id="site-nav-panel">
+                <nav aria-label="主导航">
+                    <ul class="nav-menu">
+                        <li><a href="index.html" aria-current="page">首页</a></li>
+                        <li><a href="product.html">产品能力</a></li>
+                        <li><a href="app.html">应用广场</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="contact.html">联系我们</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-actions">
+                    <span class="download-link">下载移动端</span>
+                    <button type="button" class="auth-btn outline" id="regBtn" onclick="openReg()">注册</button>
+                    <button type="button" class="auth-btn" id="loginBtn" onclick="openLogin()">登录</button>
+                    <span class="user-info" id="userName"></span>
+                    <button type="button" class="logout-btn" id="logoutBtn" onclick="logout()">退出</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main" class="home-layer">
+    <div class="hero">
+        <h1>妙手AI</h1>
+        <p>你的健康我来守护，让你安心、放心，享受生活的每一刻</p>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="card-icon">🤖</div>
+            <h2>智能问诊</h2>
+            <li>AI症状分析</li>
+            <li>常见病判断</li>
+            <li>紧急预警</li>
+            <li>护理方案</li>
+            <button type="button" class="feature-btn" onclick="openAIChat('问诊')">开始问诊</button>
+        </div>
+
+        <div class="feature-card">
+            <div class="card-icon">💊</div>
+            <h2>药物推荐</h2>
+            <li>症状匹配用药</li>
+            <li>用法用量</li>
+            <li>禁忌提示</li>
+            <li>药品查询</li>
+            <button type="button" class="feature-btn" onclick="openAIChat('用药')">用药指南</button>
+        </div>
+
+        <div class="feature-card">
+            <div class="card-icon">🩺</div>
+            <h2>就医流程助手</h2>
+            <li>挂号指南</li>
+            <li>科室推荐</li>
+            <li>就诊流程</li>
+            <li>报告解读</li>
+            <button type="button" class="feature-btn" onclick="openAIChat('就医')">查看流程</button>
+        </div>
+
+        <div class="feature-card">
+            <div class="card-icon">🗺️</div>
+            <h2>附近医院 & 路线</h2>
+            <li>定位附近医院</li>
+            <li>等级评分</li>
+            <li>导航路线</li>
+            <li>急诊筛选</li>
+            <button type="button" class="feature-btn">查找医院</button>
+        </div>
+
+        <div class="feature-card">
+            <div class="card-icon">📡</div>
+            <h2>智能设备扩展</h2>
+            <li>连接血压计手环</li>
+            <li>健康数据同步</li>
+            <li>实时监测</li>
+            <li>异常提醒</li>
+            <button type="button" class="feature-btn">连接设备</button>
+        </div>
+    </div>
+    </main>
+
+    <!-- 登录弹窗 -->
+    <div class="modal" id="loginModal">
+        <div class="modal-box">
+            <h2>用户登录</h2>
+            <div class="input-group">
+                <label>用户名</label>
+                <input type="text" id="loginUser" placeholder="请输入用户名">
+            </div>
+            <div class="input-group">
+                <label>密码</label>
+                <input type="password" id="loginPwd" placeholder="请输入密码">
+            </div>
+            <button type="button" class="modal-submit" onclick="login()">登录</button>
+            <div class="modal-switch">没有账号？<a onclick="toReg()">快去注册呀</a></div>
+            <button type="button" class="close-btn" onclick="closeAll()">关闭</button>
+        </div>
+    </div>
+
+    <!-- 注册弹窗 -->
+    <div class="modal" id="regModal">
+        <div class="modal-box">
+            <h2>用户注册</h2>
+            <div class="input-group">
+                <label>用户名</label>
+                <input type="text" id="regUser" placeholder="请输入用户名">
+            </div>
+            <div class="input-group">
+                <label>手机号</label>
+                <input type="tel" id="regPhone" placeholder="请输入手机号">
+            </div>
+            <div class="input-group">
+                <label>密码</label>
+                <input type="password" id="regPwd" placeholder="请输入密码">
+            </div>
+            <button type="button" class="modal-submit" onclick="reg()">注册</button>
+            <div class="modal-switch">已有账号？<a onclick="toLogin()">去登录</a></div>
+            <button type="button" class="close-btn" onclick="closeAll()">关闭</button>
+        </div>
+    </div>
+
+    <!-- AI 问诊弹窗 -->
+    <div class="modal" id="aiChatModal">
+        <div class="modal-box">
+            <h2 id="aiTitle">🤖 AI 智能问诊</h2>
+            <div class="input-group">
+                <label id="aiLabel">请描述你的症状</label>
+                <textarea id="aiQuestion" rows="4" placeholder="例如：头痛、咳嗽、发烧、胃痛..."></textarea>
+            </div>
+            <button type="button" class="modal-submit" onclick="askDeepSeek()">发送给 AI</button>
+            <div id="aiLoading" class="loading" style="display:none;">AI 思考中...</div>
+            <div id="aiReply" class="ai-reply" style="display:none;"></div>
+            <button type="button" class="close-btn" onclick="closeAIChat()" style="margin-top:15px;">关闭</button>
+        </div>
+    </div>
+
+    <div class="tip-modal" id="wishModal">
+        <div class="tip-box">
+            <p id="wishText">祝福语加载中...</p>
+            <button type="button" class="tip-close" onclick="closeWish()">关闭</button>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-col">
+                <h4>网站地图</h4>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="product.html">产品能力</a></li>
+                    <li><a href="app.html">应用广场</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>关于</h4>
+                <ul>
+                    <li><a href="about.html">关于我们</a></li>
+                    <li><a href="contact.html">联系我们</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>声明</h4>
+                <ul>
+                    <li><a href="about.html#disclaimer">免责声明</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="footer-bottom">本平台内容仅供健康科普与就医参考，不能替代执业医师面诊。如有不适，请及时就医。</p>
+    </footer>
+
+    <script src="assets/site.js" defer></script>
+    <script>
+        // 切勿把真实 API 密钥写入公开网页。本地开发可改为从环境变量注入或由后端代理调用。
+        const DEEPSEEK_KEY = "";
+        let currentAIType = "问诊";
+
+        // 页面加载完看用户有没有登录过
+        window.onload = function () {
+            checkLoginStatus();
+        };
+
+        // 打开登录藏注册
+        function openLogin() {
+            document.getElementById("loginModal").style.display = "flex";
+            document.getElementById("regModal").style.display = "none";
+            document.getElementById("aiChatModal").style.display = "none";
+        }
+        //反
+        function openReg() {
+            document.getElementById("regModal").style.display = "flex";
+            document.getElementById("loginModal").style.display = "none";
+            document.getElementById("aiChatModal").style.display = "none";
+        }
+        //关所有
+        function closeAll() {
+            document.getElementById("loginModal").style.display = "none";
+            document.getElementById("regModal").style.display = "none";
+            document.getElementById("aiChatModal").style.display = "none";
+        }
+
+        function toReg() { closeAll(); openReg(); }
+        function toLogin() { closeAll(); openLogin(); }
+
+        // AI 弹窗开关
+        function openAIChat(type) {
+            currentAIType = type;
+            closeAll();
+            if (type === "问诊") {
+                document.getElementById("aiTitle").innerText = "🤖 AI 智能问诊";
+                document.getElementById("aiLabel").innerText = "请描述你的症状";
+                document.getElementById("aiQuestion").placeholder = "例如：头痛、咳嗽、发烧、胃痛...";
+            } else if (type === "用药") {
+                document.getElementById("aiTitle").innerText = "💊 AI 用药指导";
+                document.getElementById("aiLabel").innerText = "请描述症状/疾病/药品名";
+                document.getElementById("aiQuestion").placeholder = "例如：感冒、咳嗽、消化不良、布洛芬...";
+            } else {
+                document.getElementById("aiTitle").innerText = "🩺 AI 就医指导";
+                document.getElementById("aiLabel").innerText = "请描述症状/咨询问题";
+                document.getElementById("aiQuestion").placeholder = "例如：胃痛挂什么科、体检流程、报告怎么看...";
+            }
+            document.getElementById("aiChatModal").style.display = "flex";
+            document.getElementById("aiQuestion").value = "";
+            document.getElementById("aiReply").style.display = "none";
+        }
+        function closeAIChat() {
+            document.getElementById("aiChatModal").style.display = "none";
+        }
+
+        // 注册（保存到本地）
+        function reg() {
+            let user = document.getElementById("regUser").value.trim();
+            let phone = document.getElementById("regPhone").value.trim();
+            let pwd = document.getElementById("regPwd").value.trim();
+
+            if (!user || !phone || !pwd) {
+                alert("填完整点！⚠️");
+                return;
+            }
+
+            let userList = JSON.parse(localStorage.getItem("userList") || "[]");
+            let exists = userList.some(item => item.user === user);
+            if (exists) {
+                alert("用户名已存在！");
+                return;
+            }
+            userList.push({ user, phone, pwd });
+            localStorage.setItem("userList", JSON.stringify(userList));
+            alert("注册成功！现在去登录吧");
+            closeAll();
+            openLogin();
+        }
+
+        // 登录（核对账号密码）
+        function login() {
+            let user = document.getElementById("loginUser").value.trim();
+            let pwd = document.getElementById("loginPwd").value.trim();
+
+            if (!user || !pwd) {
+                alert("请输入用户名和密码！");
+                return;
+            }
+
+            let userList = JSON.parse(localStorage.getItem("userList") || "[]");
+            let target = userList.find(item => item.user === user && item.pwd === pwd);
+
+            if (!target) {
+                alert("用户名或密码不对哦！❌");
+                return;
+            }
+
+            // 登录成功，保存状态
+            localStorage.setItem("isLogin", "true");
+            localStorage.setItem("currentUser", user);
+
+            alert("登录成功！🎉");
+            closeAll();
+            checkLoginStatus(); // 更新界面
+        }
+
+        //检查登录状态，更新界面 
+        function checkLoginStatus() {
+            let isLogin = localStorage.getItem("isLogin") === "true";
+            let currentUser = localStorage.getItem("currentUser") || "";
+
+            let loginBtn = document.getElementById("loginBtn");
+            let regBtn = document.getElementById("regBtn");
+            let userName = document.getElementById("userName");
+            let logoutBtn = document.getElementById("logoutBtn");
+
+            if (isLogin) {
+                // 已经登录完了，显示用户名和退出按钮
+                loginBtn.style.display = "none";
+                regBtn.style.display = "none";
+                userName.style.display = "inline-block";
+                logoutBtn.style.display = "inline-block";
+                userName.innerText = "您好，" + currentUser;
+            } else {
+                // 反
+                loginBtn.style.display = "inline-block";
+                regBtn.style.display = "inline-block";
+                userName.style.display = "none";
+                logoutBtn.style.display = "none";
+            }
+        }
+
+        // 退出登录 
+        function logout() {
+            localStorage.removeItem("isLogin");
+            localStorage.removeItem("currentUser");
+            alert("已退出登录");
+            checkLoginStatus();
+        }
+
+        // ========== DeepSeek AI 直连核心 ==========
+        async function askDeepSeek() {
+            const q = document.getElementById("aiQuestion").value.trim();
+            if (!q) { alert("请输入内容！"); return; }
+            if (!DEEPSEEK_KEY || DEEPSEEK_KEY === "sk-xxxxxxxxxxxxxxxxxxxxxxxx") {
+                alert("请先填写 DeepSeek API 密钥！");
+                return;
+            }
+
+            const loading = document.getElementById("aiLoading");
+            const reply = document.getElementById("aiReply");
+            loading.style.display = "block";
+            reply.style.display = "none";
+
+            let systemPrompt = "";
+            if (currentAIType === "问诊") {
+                systemPrompt = "你是专业医疗助手，提供症状分析、护理建议、注意事项，语言简洁易懂，最后提醒仅供参考，及时就医。";
+            } else if (currentAIType === "用药") {
+                systemPrompt = "你是专业用药助手，根据症状/疾病推荐常用药，说明用法、禁忌、注意事项，语言简洁，提醒仅供参考，遵医嘱。";
+            } else {
+                systemPrompt = "你是专业就医指导助手，提供挂号科室、就诊流程、检查报告解读、就医注意事项，简洁清晰，仅供参考。";
+            }
+
+            try {
+                const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + DEEPSEEK_KEY
+                    },
+                    body: JSON.stringify({
+                        model: "deepseek-chat",
+                        messages: [
+                            { role: "system", content: systemPrompt },
+                            { role: "user", content: q }
+                        ],
+                        temperature: 0.7
+                    })
+                });
+
+                const data = await res.json();
+                if (data.error) {
+                    reply.innerText = "错误：" + data.error.message;
+                } else {
+                    reply.innerText = data.choices[0].message.content;
+                }
+                reply.style.display = "block";
+            } catch (e) {
+                reply.innerText = "网络异常或跨域限制，无法连接 AI。\n建议使用 VSCode Live Server 运行。";
+                reply.style.display = "block";
+            } finally {
+                loading.style.display = "none";
+            }
+        }
+
+        // ========== 祝福功能 ==========
+        function showWish() {
+            var wishes = [
+                "如月之恒，如日之升。如南山之寿，不骞不崩。如松柏之茂，无不尔或承",
+                "福与此江无尽，寿与此江俱远，名与此江清",
+                "朝朝暮暮，尔尔辞晚",
+                "福禄欢喜，长生无极",
+                "愿您身体健朗如松柏，岁岁平安，笑口常开",
+                "春祺夏安，秋绥冬禧",
+                "浅予深深，长乐未央",
+                "旦逢良辰，顺颂时宜"
+            ];
+            var index = Math.floor(Math.random() * wishes.length);
+            document.getElementById("wishText").innerText = wishes[index];
+            document.getElementById("wishModal").style.display = "flex";
+        }
+
+        function closeWish() {
+            document.getElementById("wishModal").style.display = "none";
+        }
+    </script>
+</body>
+
+</html>

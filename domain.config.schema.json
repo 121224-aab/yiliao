@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "官网域名配置",
+  "type": "object",
+  "required": ["siteOrigin", "host"],
+  "properties": {
+    "siteOrigin": {
+      "type": "string",
+      "description": "站点根 URL，无末尾斜杠；绑定域名并开启 HTTPS 后请使用 https://"
+    },
+    "host": {
+      "type": "string",
+      "description": "纯主机名，用于页内展示与 CNAME，例如 miraculoushandai.top"
+    },
+    "siteName": {
+      "type": "string",
+      "description": "站点名称，用于 404 等页面标题"
+    },
+    "contactLocalPart": {
+      "type": "string",
+      "description": "联系邮箱 @ 前的局部名，默认 contact"
+    },
+    "contactEmail": {
+      "type": "string",
+      "description": "完整联系邮箱；可省略，将使用 contactLocalPart@host"
+    }
+  }
+}

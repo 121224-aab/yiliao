@@ -1,0 +1,5 @@
+# 官网：https://miraculoushandai.top — 全站对任意访客与搜索引擎开放（无登录墙）
+User-agent: *
+Allow: /
+
+Sitemap: https://miraculoushandai.top/sitemap.xml
